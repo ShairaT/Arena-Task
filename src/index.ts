@@ -1,20 +1,34 @@
-import express from "express";
-import path from "path";
-const app = express();
-const port = 8080; // default port to listen
+import express, { Request, Response, Application } from "express";
+import * as dotenv from "dotenv";
+import 'reflect-metadata';
 
-// Configure Express to use EJS
-app.set( "views", path.join( __dirname, "views" ) );
-app.set( "view engine", "ejs" );
+import { routes } from "./adapters/routes";
 
-// define a route handler for the default home page
-app.get( "/", ( req, res ) => {
-    // render the index template
-    res.render( "index" );
-} );
+const port = process.env.PORT || 3000; // default port to listen
+dotenv.config();
+class App {
+  public app: Application;
 
-// start the express server
-app.listen( port, () => {
-    // tslint:disable-next-line:no-console
-    console.log( `server started at http://localhost:${ port }` );
-} );
+  constructor() {
+    this.app = express();
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({extended: true}));
+    this.setupRoutes();
+  }
+
+  private setupRoutes(): void {
+    this.app.use('/', routes);
+
+    this.app.use((_, res) => {
+      res.status(404).json({
+        message: 'Page not found',
+        errorCode: 'ERROR_NOT_FOUND',
+      });
+    });
+  }
+}
+
+export const app = new App().app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+
