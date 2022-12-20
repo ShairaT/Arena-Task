@@ -14,7 +14,7 @@ export class GetMostTransactionsAddressFromCollectionUseCase {
   }
   async execute(
     dto: GetMostTransactionsAddressFromCollectionDTOType
-  ): Promise<any> {
+  ): Promise<string> {
     try {
       const { contractAddress, walletAddresses } = dto;
       const walletAddress = await this.transactionService.getMostTransactionsAddressFromCollection(contractAddress, walletAddresses);
@@ -25,9 +25,9 @@ export class GetMostTransactionsAddressFromCollectionUseCase {
     } catch (error) {
       this.logger.error(error);
       if(error instanceof UnableToFindTransactions){
-          return error;
+          throw error;
       }
-      return new UnexpectedError();
+      throw new UnexpectedError();
     }
   }
 }

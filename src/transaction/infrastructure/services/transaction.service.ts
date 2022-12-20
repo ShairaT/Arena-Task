@@ -1,6 +1,7 @@
 import { Logger } from "winston";
 import axios from "axios";
 import { ITransactionService } from "../../domain/interfaces/transaction.service.interface";
+import { ITransaction } from "../../domain/interfaces/transaction.interface";
 
 export class TransactionService implements ITransactionService {
   protected logger;
@@ -16,7 +17,7 @@ export class TransactionService implements ITransactionService {
   public getTransactionsFromCollectionToWallet = async (
     constract: string,
     wallet: string
-  ): Promise<any> => {
+  ): Promise<ITransaction[]> => {
     try {
       const data = {
         jsonrpc: "2.0",
@@ -34,7 +35,16 @@ export class TransactionService implements ITransactionService {
         `${this.apiUrl}/${this.apiKey}`,
         data
       );
-      return transactions.data?.result;
+      return transactions.data?.result?.transfers.map((rawtransaction: any) => {
+          return {
+            id: rawtransaction.uniqueId,
+            hash: rawtransaction.hash,
+            blockNum: rawtransaction.blockNum,
+            walletAddress: rawtransaction.to,
+            contractAddress: rawtransaction.rawContract.address,
+            value: rawtransaction.value
+          } as ITransaction
+      }) || [];
     } catch (error) {
       this.logger.error(error);
       return error;
@@ -52,7 +62,7 @@ export class TransactionService implements ITransactionService {
           return this.getTransactionsFromCollectionToWallet(constract, wallet);
       }));
       transactions.forEach((data: any, index: number) => {
-        const numTransactions = data?.transfers.length;
+        const numTransactions = data.length;
         if (numTransactions > mostTransactions) {
           mostTransactions = numTransactions;
           mostTransactionsAddress = wallets[index];
