@@ -1,8 +1,6 @@
 import { Logger } from "winston";
 import axios from "axios";
 import { ITransactionService } from "../../domain/interfaces/transaction.service.interface";
-import { UnableToFindTransactions } from "../../domain/exceptions/UnableToFindTransactions.exception";
-import { UnexpectedError } from "../../../shared/exceptions/UnexpectedError.exception";
 
 export class TransactionService implements ITransactionService {
   protected logger;
@@ -37,6 +35,30 @@ export class TransactionService implements ITransactionService {
         data
       );
       return transactions.data?.result;
+    } catch (error) {
+      this.logger.error(error);
+      return error;
+    }
+  };
+
+  public getMostTransactionsAddressFromCollection = async (
+    constract: string,
+    wallets: string[]
+  ): Promise<string> => {
+    let mostTransactions = 0;
+    let mostTransactionsAddress = '';
+    try {
+      const transactions = await Promise.all(wallets.map(async (wallet:string)=>{
+          return this.getTransactionsFromCollectionToWallet(constract, wallet);
+      }));
+      transactions.forEach((data: any, index: number) => {
+        const numTransactions = data?.transfers.length;
+        if (numTransactions > mostTransactions) {
+          mostTransactions = numTransactions;
+          mostTransactionsAddress = wallets[index];
+        }
+      }); 
+      return mostTransactionsAddress;
     } catch (error) {
       this.logger.error(error);
       return error;

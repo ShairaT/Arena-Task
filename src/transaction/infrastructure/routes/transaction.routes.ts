@@ -11,6 +11,17 @@ export class TransactionRoutes extends BaseRoutes {
     this.routes();
   }
   routes = (): void => {
-    this.router.post('/last', asyncHandler(this.transactionController.getLastTransactionFromContractToWallet));
+    this.router.post(
+      "/last",
+      asyncHandler(
+        this.transactionController.getLastTransactionFromContractToWallet
+      )
+    );
+    this.router.post(
+      "/most-transactions/wallet",
+      asyncHandler(
+        this.transactionController.getMostTransactionsWalletFromContract
+      )
+    );
   };
 }
