@@ -2,10 +2,10 @@ import { UnexpectedError } from "../../../../shared/exceptions/UnexpectedError.e
 import { Logger } from "../../../../shared/lib/logger";
 import { UnableToFindTransactions } from "../../../domain/exceptions/UnableToFindTransactions.exception";
 import { ITransaction } from "../../../domain/interfaces/transaction.interface";
-import { GetLastTransactionFromCollectionToWalletDTO } from "../../dto/GetLastTransactionFromCollectionToWallet.dto";
+import { GetLastTransactionFromContractToWalletDTO } from "../../dto/GetLastTransactionFromContractToWallet.dto";
 import { TransactionService } from "../../services/transaction.service";
 
-export class GetLastTransactionFromCollectionToWalletUseCase {
+export class GetLastTransactionFromContractToWalletUseCase {
   private readonly logger;
   private readonly transactionService: TransactionService;
 
@@ -14,11 +14,11 @@ export class GetLastTransactionFromCollectionToWalletUseCase {
     this.transactionService = new TransactionService(this.logger);
   }
   async execute(
-    dto: GetLastTransactionFromCollectionToWalletDTO
+    dto: GetLastTransactionFromContractToWalletDTO
   ): Promise<ITransaction> {
     try {
       const { contractAddress, walletAddress } = dto;
-      const transactions = await this.transactionService.getTransactionsFromCollectionToWallet(contractAddress, walletAddress);
+      const transactions = await this.transactionService.getTransactionsFromContractToWallet(contractAddress, walletAddress);
       if (transactions.length === 0) {
         throw new UnableToFindTransactions();
       }

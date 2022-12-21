@@ -1,7 +1,8 @@
-import { Logger } from "winston";
+
 import axios from "axios";
 import { ITransactionService } from "../../domain/interfaces/transaction.service.interface";
 import { ITransaction } from "../../domain/interfaces/transaction.interface";
+import { Logger } from "winston";
 
 export class TransactionService implements ITransactionService {
   protected logger;
@@ -14,10 +15,10 @@ export class TransactionService implements ITransactionService {
     this.apiKey = process.env.API_KEY;
   }
 
-  public getTransactionsFromCollectionToWallet = async (
+  public async getTransactionsFromContractToWallet (
     constract: string,
     wallet: string
-  ): Promise<ITransaction[]> => {
+  ): Promise<ITransaction[]> {
     try {
       const data = {
         jsonrpc: "2.0",
@@ -51,15 +52,15 @@ export class TransactionService implements ITransactionService {
     }
   };
 
-  public getMostTransactionsAddressFromCollection = async (
+  public async getMostTransactionsAddressFromContract (
     constract: string,
     wallets: string[]
-  ): Promise<string> => {
+  ): Promise<string> {
     let mostTransactions = 0;
     let mostTransactionsAddress = '';
     try {
       const transactions = await Promise.all(wallets.map(async (wallet:string)=>{
-          return this.getTransactionsFromCollectionToWallet(constract, wallet);
+          return this.getTransactionsFromContractToWallet(constract, wallet);
       }));
       transactions.forEach((data: any, index: number) => {
         const numTransactions = data.length;
@@ -67,7 +68,7 @@ export class TransactionService implements ITransactionService {
           mostTransactions = numTransactions;
           mostTransactionsAddress = wallets[index];
         }
-      }); 
+      });
       return mostTransactionsAddress;
     } catch (error) {
       this.logger.error(error);

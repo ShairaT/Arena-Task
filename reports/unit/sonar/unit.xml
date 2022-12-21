@@ -1,0 +1,11 @@
+<testExecutions version="1">
+<file path="/Users/ayelenluciano/Documents/Arena-Task/src/transaction/__tests__/useCases/getMostTransactionsAddressFromContract.test.ts">
+<testCase name="Test GetMostTransactionsAddressFromContractUseCase Should return the last transaction from a given wallet and contract address" duration="13" />
+<testCase name="Test GetMostTransactionsAddressFromContractUseCase Should return UnexpectedError if there was an error" duration="2" />
+</file>
+<file path="/Users/ayelenluciano/Documents/Arena-Task/src/transaction/__tests__/useCases/getLastTransactionFromContractToWallet.test.ts">
+<testCase name="Test GetLastTransactionFromContractToWalletUseCase Should return the last transaction from a given wallet and contract address" duration="14" />
+<testCase name="Test GetLastTransactionFromContractToWalletUseCase Should return UnableToFindTransactions if there are no transactions" duration="2" />
+<testCase name="Test GetLastTransactionFromContractToWalletUseCase Should return UnexpectedError if there was an error" duration="0" />
+</file>
+</testExecutions>

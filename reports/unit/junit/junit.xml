@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Unit Testing" tests="5" failures="0" errors="0" time="0.506">
+  <testsuite name="Test GetMostTransactionsAddressFromContractUseCase" errors="0" failures="0" skipped="0" timestamp="2022-12-21T16:00:15" time="0.354" tests="2">
+    <testcase classname="Test GetMostTransactionsAddressFromContractUseCase Should return the last transaction from a given wallet and contract address" name="Test GetMostTransactionsAddressFromContractUseCase Should return the last transaction from a given wallet and contract address" time="0.013">
+    </testcase>
+    <testcase classname="Test GetMostTransactionsAddressFromContractUseCase Should return UnexpectedError if there was an error" name="Test GetMostTransactionsAddressFromContractUseCase Should return UnexpectedError if there was an error" time="0.002">
+    </testcase>
+  </testsuite>
+  <testsuite name="Test GetLastTransactionFromContractToWalletUseCase" errors="0" failures="0" skipped="0" timestamp="2022-12-21T16:00:15" time="0.093" tests="3">
+    <testcase classname="Test GetLastTransactionFromContractToWalletUseCase Should return the last transaction from a given wallet and contract address" name="Test GetLastTransactionFromContractToWalletUseCase Should return the last transaction from a given wallet and contract address" time="0.014">
+    </testcase>
+    <testcase classname="Test GetLastTransactionFromContractToWalletUseCase Should return UnableToFindTransactions if there are no transactions" name="Test GetLastTransactionFromContractToWalletUseCase Should return UnableToFindTransactions if there are no transactions" time="0.002">
+    </testcase>
+    <testcase classname="Test GetLastTransactionFromContractToWalletUseCase Should return UnexpectedError if there was an error" name="Test GetLastTransactionFromContractToWalletUseCase Should return UnexpectedError if there was an error" time="0">
+    </testcase>
+  </testsuite>
+</testsuites>

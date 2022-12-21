@@ -1,0 +1,67 @@
+module.exports = {
+  collectCoverageFrom: [
+    'src/**/*.(t|j)s',
+    '!src/**/**/index.ts',
+    '!src/**/__tests__/**/*.ts',
+    '!src/**/routes/**/*.ts',
+    '!src/routes/*.ts',
+    '!src/migrations/*.js',
+    '!src/seeders/*.js',
+    '!src/lib/app.ts',
+    '!src/lib.server.ts',
+  ],
+  moduleNameMapper: {
+    '@config(.*)': '<rootDir>/src/config/$1',
+    '@controllers(.*)': '<rootDir>/src/controllers/$1',
+    '@di(.*)': '<rootDir>/src/di/$1',
+    '@entities(.*)': '<rootDir>/src/entities/$1',
+    '@features(.*)': '<rootDir>/src/features/$1',
+    '@helpers(.*)': '<rootDir>/src/helpers/$1',
+    '@lib(.*)': '<rootDir>/src/lib/$1',
+    '@middlewares(.*)': '<rootDir>/src/middlewares/$1',
+    '@modules(.*)': '<rootDir>/src/modules/$1',
+    '@routes(.*)': '<rootDir>/src/routes/$1',
+    '@schemas(.*)': '<rootDir>/src/schemas/$1',
+    '@services(.*)': '<rootDir>/src/services/$1',
+    '@data(.*)': '<rootDir>/test/data/$1',
+    '@unit/mocks(.*)': '<rootDir>/test/unit/mocks/$1',
+  },
+  reporters: [
+    'default',
+    [
+      'jest-sonar',
+      {
+        outputDirectory: 'reports/unit/sonar',
+        outputName: 'unit.xml',
+        reportedFilePath: 'absolute',
+      },
+    ],
+    [
+      'jest-junit',
+      {
+        suiteName: 'Unit Testing',
+        outputDirectory: 'reports/unit/junit',
+        outputName: 'junit.xml',
+        reportedFilePath: 'absolute',
+      },
+    ],
+  ],
+  globals: {
+    'ts-jest': {
+      isolatedModules: true,
+    },
+  },
+  setupFiles: ["dotenv/config"],
+  maxWorkers: '50%',
+  modulePaths: ['<rootDir>'],
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: './',
+  testEnvironment: 'node',
+  modulePathIgnorePatterns: ["<rootDir>/dist/"],
+  testPathIgnorePatterns: ["/node_modules/", "/dist/", "/__mocks__/"],
+  testRegex: '.*\\.test\\.ts$',
+  transform: {
+    '^.+\\.(t|j)s$': 'ts-jest',
+  },
+  verbose: true,
+};

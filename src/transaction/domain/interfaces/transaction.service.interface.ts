@@ -1,6 +1,5 @@
 import { ITransaction } from "./transaction.interface";
 
 export interface ITransactionService {
-    getTransactionsFromCollectionToWallet: (contract: string, wallet: string) => Promise<ITransaction[]>;
+  getTransactionsFromContractToWallet: (contract: string, wallet: string) => Promise<ITransaction[]>;
   }
-  

@@ -1,9 +1,9 @@
 import { Request } from "express";
-import { GetMostTransactionsAddressFromCollectionDTOType } from "../../domain/interfaces/types";
+import { GetMostTransactionsAddressFromContractDTOType } from "../../domain/interfaces/types";
 
 
-export class GetMostTransactionsAddressFromCollectionDTO
-  implements GetMostTransactionsAddressFromCollectionDTOType
+export class GetMostTransactionsAddressFromContractDTO
+  implements GetMostTransactionsAddressFromContractDTOType
 {
   contractAddress: string;
   walletAddresses: string[];

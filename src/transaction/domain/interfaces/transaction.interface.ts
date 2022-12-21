@@ -6,4 +6,3 @@ export interface ITransaction {
     contractAddress: string;
     value: number;
   }
-  

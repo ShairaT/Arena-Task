@@ -1,10 +1,10 @@
 import { UnexpectedError } from "../../../../shared/exceptions/UnexpectedError.exception";
 import { Logger } from "../../../../shared/lib/logger";
 import { UnableToFindTransactions } from "../../../domain/exceptions/UnableToFindTransactions.exception";
-import { GetMostTransactionsAddressFromCollectionDTOType } from "../../../domain/interfaces/types";
+import { GetMostTransactionsAddressFromContractDTOType } from "../../../domain/interfaces/types";
 import { TransactionService } from "../../services/transaction.service";
 
-export class GetMostTransactionsAddressFromCollectionUseCase {
+export class GetMostTransactionsAddressFromContractUseCase {
   private readonly logger;
   private readonly transactionService: TransactionService;
 
@@ -13,11 +13,11 @@ export class GetMostTransactionsAddressFromCollectionUseCase {
     this.transactionService = new TransactionService(this.logger);
   }
   async execute(
-    dto: GetMostTransactionsAddressFromCollectionDTOType
+    dto: GetMostTransactionsAddressFromContractDTOType
   ): Promise<string> {
     try {
       const { contractAddress, walletAddresses } = dto;
-      const walletAddress = await this.transactionService.getMostTransactionsAddressFromCollection(contractAddress, walletAddresses);
+      const walletAddress = await this.transactionService.getMostTransactionsAddressFromContract(contractAddress, walletAddresses);
       if (!walletAddress) {
         throw new UnableToFindTransactions();
       }

@@ -2,7 +2,7 @@ export class ApiError extends Error {
     public status: number;
     public errorCode: string;
     public errors?: any[];
-  
+
     constructor({
       status,
       message,
@@ -20,4 +20,3 @@ export class ApiError extends Error {
       this.errors = errors;
     }
   }
-  
